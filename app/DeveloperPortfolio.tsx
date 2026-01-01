@@ -3,17 +3,26 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
-import { X, ArrowUp, Github, Mail, Code, Server, Sparkles, Zap, Palette } from "lucide-react"
+import Image from "next/image"
+import { ArrowUp, Code, Github, Mail, Palette, Server, Sparkles, X, Zap } from "lucide-react"
 import { projects } from "./data/projects"
 
 const FloatingParticles = dynamic(() => import("./components/FloatingParticles"), { ssr: false })
+
+type FormData = {
+  name: string
+  email: string
+  message: string
+  website: string
+}
 
 export default function DeveloperPortfolio() {
   const [showContactForm, setShowContactForm] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
@@ -25,71 +34,75 @@ export default function DeveloperPortfolio() {
   const [sendSuccess, setSendSuccess] = useState(false)
 
   useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)")
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener("change", update)
+    return () => mq.removeEventListener("change", update)
+  }, [])
+
+  useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      setScrollY(currentScrollY)
+      const current = window.scrollY
+      setScrollY(current)
 
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrollPercentage = (currentScrollY / scrollHeight) * 100
-      setShowBackToTop(scrollPercentage > 30)
+      const pct = scrollHeight > 0 ? (current / scrollHeight) * 100 : 0
+      setShowBackToTop(pct > 30)
     }
 
     window.addEventListener("scroll", handleScroll)
     handleScroll()
-
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) element.scrollIntoView({ behavior: "smooth" })
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: "smooth" })
   }
 
   const technologies = [
     {
       title: "Développement Frontend",
-      subtitle: "Je conçois des interfaces avec attention aux détails et souci de l'expérience utilisateur",
+      subtitle: "Interfaces soignées, fluides et accessibles",
       items: [
-        { name: "React", icon: "⚛️", description: "Développement d'applications interactives robustes" },
-        { name: "JavaScript", icon: "🟨", description: "Maîtrise solide pour un code propre et efficace" },
-        { name: "TypeScript", icon: "🔷", description: "Adoption pour une meilleure structure de code" },
-        { name: "Tailwind CSS", icon: "🎨", description: "Création de designs cohérents et responsives" },
-        { name: "Next.js", icon: "▲", description: "Framework moderne pour des performances optimales" },
+        { name: "React", icon: "⚛️", description: "Applications interactives robustes" },
+        { name: "JavaScript", icon: "🟨", description: "Code propre et efficace" },
+        { name: "TypeScript", icon: "🔷", description: "Structure et fiabilité" },
+        { name: "Tailwind CSS", icon: "🎨", description: "Design responsive cohérent" },
+        { name: "Next.js", icon: "▲", description: "Performance & SEO" },
       ],
       gradient: "from-cyan-400 via-blue-500 to-purple-600",
       bgGradient: "from-cyan-500/20 via-blue-500/20 to-purple-600/20",
       icon: Palette,
-      pattern: "frontend",
     },
     {
       title: "Développement Backend",
-      subtitle: "J’architecture des solutions serveur avec méthode et attention à la sécurité",
+      subtitle: "APIs claires, sécurité et données maîtrisées",
       items: [
-        { name: "Node.js", icon: "🟢", description: "Développement d'APIs performantes et maintenables" },
-        { name: "Python", icon: "🐍", description: "Automatisation et traitement de données efficaces" },
-        { name: "PostgreSQL", icon: "🐘", description: "Gestion rigoureuse des données relationnelles" },
-        { name: "MongoDB", icon: "🍃", description: "Solutions NoSQL adaptées aux besoins complexes" },
-        { name: "Express", icon: "🚀", description: "Framework léger pour des architectures claires" },
+        { name: "Node.js", icon: "🟢", description: "APIs maintenables" },
+        { name: "Express", icon: "🚀", description: "Architecture REST" },
+        { name: "PostgreSQL", icon: "🐘", description: "Données relationnelles solides" },
+        { name: "MongoDB", icon: "🍃", description: "NoSQL quand c’est pertinent" },
+        { name: "Docker", icon: "🐳", description: "Environnements cohérents" },
       ],
       gradient: "from-emerald-400 via-teal-500 to-cyan-600",
       bgGradient: "from-emerald-500/20 via-teal-500/20 to-cyan-600/20",
       icon: Zap,
-      pattern: "backend",
     },
     {
       title: "Outils et Méthodes",
-      subtitle: "J’applique des pratiques rigoureuses pour un développement organisé et collaboratif",
+      subtitle: "Travail structuré, qualité et collaboration",
       items: [
-        { name: "Git", icon: "🌿", description: "Versioning méticuleux et collaboration structurée" },
-        { name: "Docker", icon: "🐳", description: "Conteneurisation pour des déploiements cohérents" },
-        { name: "GitHub", icon: "🐙", description: "Gestion de projets avec workflows optimisés" },
-        { name: "Figma", icon: "🎯", description: "Collaboration design-dev avec précision" },
-        { name: "VS Code", icon: "💙", description: "Environnement configuré pour une productivité maximale" },
+        { name: "Git", icon: "🌿", description: "Versioning rigoureux" },
+        { name: "GitHub", icon: "🐙", description: "Workflows propres" },
+        { name: "Figma", icon: "🎯", description: "Passerelle design → dev" },
+        { name: "VS Code", icon: "💙", description: "Productivité au quotidien" },
+        { name: "Tests", icon: "✅", description: "Vérifier ce qui compte" },
       ],
       gradient: "from-orange-400 via-red-500 to-pink-600",
       bgGradient: "from-orange-500/20 via-red-500/20 to-pink-600/20",
       icon: Sparkles,
-      pattern: "tools",
     },
   ]
 
@@ -127,12 +140,8 @@ export default function DeveloperPortfolio() {
     }
   }
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden pb-28 sm:pb-0">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-cyan-500/30 to-blue-500/30 rounded-full blur-3xl animate-pulse" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -183,7 +192,7 @@ export default function DeveloperPortfolio() {
             >
               <span className="relative z-10 flex items-center">
                 <Server className="w-5 h-5 mr-2" />
-                Mes Services
+                Mes Compétences
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
@@ -210,14 +219,11 @@ export default function DeveloperPortfolio() {
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
               <p>
                 Développeur web qui aborde chaque projet avec{" "}
-                <span className="text-cyan-400 font-semibold">méthode et précision</span>. Ma passion pour le code se
-                traduit par une attention particulière aux détails et une recherche constante de{" "}
-                <span className="text-purple-400 font-semibold">solutions élégantes</span>.
+                <span className="text-cyan-400 font-semibold">méthode et précision</span>. Mon objectif : livrer des
+                interfaces élégantes et des solutions fiables.
               </p>
               <p>
-                J&apos;applique une approche rigoureuse dans mes développements, de la conception à la mise en
-                production. Chaque ligne de code est pensée pour la performance, la maintenabilité et
-                l&apos;expérience utilisateur.
+                Chaque ligne de code est pensée pour la performance, la maintenabilité et l&apos;expérience utilisateur.
               </p>
               <p>
                 Je mets ma <span className="text-pink-400 font-semibold">rigueur au service de votre vision</span>.
@@ -225,11 +231,10 @@ export default function DeveloperPortfolio() {
             </div>
 
             <div className="mt-12 flex flex-wrap gap-4 justify-center">
-              {["Rigoureux", "Passionné", "Méticuleux", "Enthousiaste"].map((trait, index) => (
+              {["Rigoureux", "Passionné", "Méticuleux", "Enthousiaste"].map((trait) => (
                 <span
                   key={trait}
                   className="px-4 py-2 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-full text-sm font-medium"
-                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {trait}
                 </span>
@@ -241,8 +246,8 @@ export default function DeveloperPortfolio() {
 
       <section id="tech-stack" className="relative py-32 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl md:text-7xl font-black mb-6">
+          <div className="text-center mb-20 px-2">
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black mb-6 leading-none break-words">
               <span className="bg-gradient-to-r from-white via-cyan-400 to-purple-500 bg-clip-text text-transparent">
                 COMPÉTENCES
               </span>
@@ -257,11 +262,15 @@ export default function DeveloperPortfolio() {
               const IconComponent = tech.icon
               return (
                 <div
-                  key={index}
+                  key={tech.title}
                   className="group relative"
-                  style={{
-                    transform: `translateY(${Math.sin(scrollY * 0.003 + index) * 20}px)`,
-                  }}
+                  style={
+                    isMobile
+                      ? undefined
+                      : {
+                          transform: `translateY(${Math.sin(scrollY * 0.003 + index) * 20}px)`,
+                        }
+                  }
                 >
                   <div className="relative h-full bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 transition-all duration-500 group-hover:scale-105 group-hover:border-white/20">
                     <div
@@ -278,9 +287,9 @@ export default function DeveloperPortfolio() {
                     </div>
 
                     <div className="relative z-10 space-y-4">
-                      {tech.items.map((skill, skillIndex) => (
+                      {tech.items.map((skill) => (
                         <div
-                          key={skillIndex}
+                          key={skill.name}
                           className="flex items-center space-x-4 p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300"
                         >
                           <div className="text-2xl">{skill.icon}</div>
@@ -310,8 +319,8 @@ export default function DeveloperPortfolio() {
 
       <section id="projects" className="relative py-32 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl md:text-7xl font-black mb-6">
+          <div className="text-center mb-20 px-2">
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black mb-6 leading-none break-words">
               <span className="bg-gradient-to-r from-white via-cyan-400 to-purple-500 bg-clip-text text-transparent">
                 PROJETS
               </span>
@@ -331,12 +340,29 @@ export default function DeveloperPortfolio() {
                 className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-500 hover:scale-105"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className={`${project.color} aspect-video flex items-center justify-center relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/40" />
-                  <span className="text-white font-bold text-3xl drop-shadow-2xl relative z-10">
-                    {project.id.toString().padStart(2, "0")}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="relative aspect-video overflow-hidden">
+                  {project.image ? (
+                    <>
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={index < 2}
+                      />
+                      <div className="absolute inset-0 bg-black/40" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    </>
+                  ) : (
+                    <div className={`${project.color} w-full h-full flex items-center justify-center relative overflow-hidden`}>
+                      <div className="absolute inset-0 bg-black/40" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <span className="text-white font-bold text-3xl drop-shadow-2xl relative z-10">
+                        {project.id.toString().padStart(2, "0")}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-6">
@@ -370,7 +396,7 @@ export default function DeveloperPortfolio() {
           setSendSuccess(false)
           setShowContactForm(true)
         }}
-        className="fixed bottom-8 right-8 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-8 py-4 rounded-full shadow-2xl transition-all duration-300 z-40 flex items-center hover:scale-110 backdrop-blur-lg border border-white/20"
+        className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full shadow-2xl transition-all duration-300 z-40 flex items-center hover:scale-110 backdrop-blur-lg border border-white/20 text-sm sm:text-base max-w-[calc(100vw-2.5rem)]"
       >
         <Mail className="w-5 h-5 mr-2" />
         <span className="font-semibold">CONTACT</span>
@@ -379,7 +405,7 @@ export default function DeveloperPortfolio() {
       {showBackToTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-8 left-8 bg-white/10 backdrop-blur-lg hover:bg-white/20 text-white p-4 rounded-full shadow-2xl transition-all duration-300 z-40 hover:scale-110 border border-white/20"
+          className="fixed bottom-5 left-5 sm:bottom-8 sm:left-8 bg-white/10 backdrop-blur-lg hover:bg-white/20 text-white p-4 rounded-full shadow-2xl transition-all duration-300 z-40 hover:scale-110 border border-white/20"
           aria-label="Retour en haut"
         >
           <ArrowUp className="w-6 h-6" />
