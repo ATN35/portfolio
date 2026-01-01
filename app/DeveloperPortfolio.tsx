@@ -17,6 +17,7 @@ export default function DeveloperPortfolio() {
     name: "",
     email: "",
     message: "",
+    website: "",
   })
 
   const [isSending, setIsSending] = useState(false)
@@ -113,7 +114,7 @@ export default function DeveloperPortfolio() {
       }
 
       setSendSuccess(true)
-      setFormData({ name: "", email: "", message: "" })
+      setFormData({ name: "", email: "", message: "", website: "" })
       setIsSending(false)
 
       setTimeout(() => {
@@ -377,7 +378,7 @@ export default function DeveloperPortfolio() {
 
       {showBackToTop && (
         <button
-          onClick={scrollToTop}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="fixed bottom-8 left-8 bg-white/10 backdrop-blur-lg hover:bg-white/20 text-white p-4 rounded-full shadow-2xl transition-all duration-300 z-40 hover:scale-110 border border-white/20"
           aria-label="Retour en haut"
         >
@@ -466,6 +467,18 @@ export default function DeveloperPortfolio() {
                   className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-gray-400 transition-all resize-none"
                   required
                   disabled={isSending}
+                />
+              </div>
+
+              <div className="hidden">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  type="text"
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  autoComplete="off"
+                  tabIndex={-1}
                 />
               </div>
 
