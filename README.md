@@ -1,36 +1,160 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio – Antoine Lelièvre
 
-## Getting Started
+Portfolio professionnel de développeur web & web mobile réalisé avec Next.js.
+Ce projet présente mes compétences, mes projets concrets et permet un contact direct.
 
-First, run the development server:
+## 🌐 Liens
+- Démo : https://lesage-lelievre.vercel.app
+- GitHub : https://github.com/ATN35
 
-```bash
+---
+
+## 🎯 Objectif du projet
+
+- Présenter mes projets réels et évolutifs
+- Démontrer mes compétences frontend / fullstack
+- Proposer un contact simple et professionnel
+- Disposer d’une base propre, maintenable et déployable
+
+---
+
+## ✨ Fonctionnalités
+
+- Interface moderne et animée
+- Responsive complet (desktop / tablette / mobile)
+- Section projets dynamique
+- Images de projets personnalisées
+- Formulaire de contact fonctionnel avec retour utilisateur
+- Envoi d’email côté serveur
+- Déploiement automatique sur Vercel
+
+---
+
+## 🛠️ Stack technique
+
+- Framework : Next.js (App Router)
+- Langage : TypeScript
+- Style : Tailwind CSS
+- Icônes : Lucide React
+- Email : Resend
+- Déploiement : Vercel
+
+---
+
+## 📂 Structure du projet
+
+app/
+├─ api/
+│  └─ contact/
+│     └─ route.ts
+├─ components/
+│  ├─ DeveloperPortfolio.tsx
+│  └─ FloatingParticles.tsx
+├─ data/
+│  └─ projects.ts
+├─ layout.tsx
+├─ page.tsx
+└─ globals.css
+
+public/
+├─ projects/
+│  ├─ lesage-lelievre.png
+│  ├─ portfolio.png
+│  └─ todo.png
+
+---
+
+## 🧩 Gestion des projets
+
+Les projets sont centralisés dans le fichier :
+data/projects.ts
+
+Chaque projet contient :
+- title
+- description
+- tech
+- url
+- image
+
+Pour ajouter un projet :
+1. Ajouter l’image dans public/projects
+2. Ajouter une entrée dans projects.ts
+
+Aucune modification du composant principal n’est nécessaire.
+
+---
+
+## 🖼️ Images des projets
+
+Les images doivent être placées dans :
+public/projects
+
+Le chemin utilisé est absolu, par exemple :
+/projects/lesage-lelievre.png
+
+---
+
+## 📬 Formulaire de contact
+
+Le formulaire utilise une API interne Next.js pour envoyer un email.
+
+Variables d’environnement à définir dans un fichier .env.local (non versionné) :
+
+RESEND_API_KEY=ta_cle_resend
+CONTACT_TO_EMAIL=ton@email.com
+
+---
+
+## 🔒 Sécurité et bonnes pratiques
+
+- Clés API jamais exposées côté client
+- Envoi d’email uniquement côté serveur
+- Validation des champs côté backend
+- Séparation claire des responsabilités
+- Code structuré et maintenable
+
+---
+
+## ▶️ Lancer le projet en local
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Puis ouvrir :
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Déploiement
 
-## Learn More
+Le projet est déployé sur Vercel :
+- HTTPS automatique
+- Variables d’environnement sécurisées
+- Build et déploiement continus
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧾 Améliorations récentes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Correction complète du responsive mobile
+- Ajout des images dans la section projets
+- Centralisation des projets via projects.ts
+- Ajout du formulaire de contact fonctionnel
+- Amélioration de la cohérence visuelle globale
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👤 Auteur
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Antoine Lelièvre  
+Développeur Web & Web Mobile
+
+GitHub : https://github.com/ATN35  
+Portfolio : https://lesage-lelievre.vercel.app
+
+---
+
+## 📄 Licence
+
+Projet personnel.
+Libre d’inspiration, non destiné à la revente.
