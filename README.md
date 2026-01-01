@@ -4,8 +4,7 @@ Portfolio professionnel de développeur web & web mobile réalisé avec Next.js.
 Ce projet présente mes compétences, mes projets concrets et permet un contact direct.
 
 ## 🌐 Liens
-- Démo : https://lesage-lelievre.vercel.app
-- GitHub : https://github.com/ATN35
+- Démo : https://lesage-lelievre.vercel.app](https://portfolio-beige-kappa-t2fdlp3rs0.verc
 
 ---
 
@@ -149,12 +148,4 @@ Le projet est déployé sur Vercel :
 Antoine Lelièvre  
 Développeur Web & Web Mobile
 
-GitHub : https://github.com/ATN35  
-Portfolio : https://lesage-lelievre.vercel.app
-
----
-
-## 📄 Licence
-
-Projet personnel.
-Libre d’inspiration, non destiné à la revente.
+GitHub : https://github.com/ATN35
