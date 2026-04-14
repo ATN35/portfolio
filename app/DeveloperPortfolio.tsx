@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import { ArrowUp, Code, Github, Mail, Palette, Server, Sparkles, X, Zap } from "lucide-react"
+import { Linkedin } from "lucide-react"
 import { projects } from "./data/projects"
 
 const FloatingParticles = dynamic(() => import("./components/FloatingParticles"), { ssr: false })
@@ -177,7 +178,7 @@ export default function DeveloperPortfolio() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button
               onClick={() => scrollToSection("projects")}
-              className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25"
+              className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 cursor-pointer"
             >
               <span className="relative z-10 flex items-center">
                 <Code className="w-5 h-5 mr-2" />
@@ -188,7 +189,7 @@ export default function DeveloperPortfolio() {
 
             <button
               onClick={() => scrollToSection("tech-stack")}
-              className="group relative px-8 py-4 border-2 border-purple-500 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105"
+              className="group relative px-8 py-4 border-2 border-purple-500 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer"
             >
               <span className="relative z-10 flex items-center">
                 <Server className="w-5 h-5 mr-2" />
@@ -396,7 +397,7 @@ export default function DeveloperPortfolio() {
           setSendSuccess(false)
           setShowContactForm(true)
         }}
-        className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full shadow-2xl transition-all duration-300 z-40 flex items-center hover:scale-110 backdrop-blur-lg border border-white/20 text-sm sm:text-base max-w-[calc(100vw-2.5rem)]"
+        className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full shadow-2xl transition-all duration-300 z-40 flex items-center hover:scale-110 backdrop-blur-lg border border-white/20 text-sm sm:text-base max-w-[calc(100vw-2.5rem)] cursor-pointer"
       >
         <Mail className="w-5 h-5 mr-2" />
         <span className="font-semibold">CONTACT</span>
@@ -405,7 +406,7 @@ export default function DeveloperPortfolio() {
       {showBackToTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-5 left-5 sm:bottom-8 sm:left-8 bg-white/10 backdrop-blur-lg hover:bg-white/20 text-white p-4 rounded-full shadow-2xl transition-all duration-300 z-40 hover:scale-110 border border-white/20"
+          className="fixed bottom-5 left-5 sm:bottom-8 sm:left-8 bg-white/10 backdrop-blur-lg hover:bg-white/20 text-white p-4 rounded-full shadow-2xl transition-all duration-300 z-40 hover:scale-110 border border-white/20 cursor-pointer"
           aria-label="Retour en haut"
         >
           <ArrowUp className="w-6 h-6" />
@@ -423,10 +424,19 @@ export default function DeveloperPortfolio() {
               href="https://github.com/ATN35"
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-5 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full hover:border-white/20 hover:scale-110 transition-all duration-300"
+              className="group p-5 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full hover:border-white/20 hover:scale-110 transition-all duration-300 mr-4"
               aria-label="GitHub"
             >
               <Github className="w-7 h-7 text-white group-hover:text-cyan-400 transition-colors" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/antoine-leli%C3%A8vre-7a510a3b8/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-5 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full hover:border-white/20 hover:scale-110 transition-all duration-300"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-7 h-7 text-white group-hover:text-cyan-400 transition-colors" />
             </a>
           </div>
 
@@ -439,7 +449,7 @@ export default function DeveloperPortfolio() {
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 w-full max-w-md relative">
             <button
               onClick={() => setShowContactForm(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+              className="absolute top-4 right-4 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
               aria-label="Fermer"
               disabled={isSending}
             >
@@ -524,7 +534,7 @@ export default function DeveloperPortfolio() {
               <button
                 type="submit"
                 disabled={isSending}
-                className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 disabled:opacity-60 disabled:hover:from-cyan-500 disabled:hover:to-purple-600 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 disabled:opacity-60 disabled:hover:from-cyan-500 disabled:hover:to-purple-600 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg cursor-pointer"
               >
                 {isSending ? "Envoi..." : "Envoyer"}
               </button>
