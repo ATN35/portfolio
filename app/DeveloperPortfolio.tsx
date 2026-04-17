@@ -3,19 +3,16 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
-import Image from "next/image"
-import { ArrowUp, Code, Github, Mail, Palette, Server, Sparkles, X, Zap } from "lucide-react"
-import { Linkedin } from "lucide-react"
-import { projects } from "./data/projects"
+import HeroSection from "./components/HeroSection"
+import AboutSection from "./components/AboutSection"
+import TechStackSection from "./components/TechStackSection"
+import ProjectsSection from "./components/ProjectsSection"
+import ContactButton from "./components/ContactButton"
+import ContactForm, { type FormData } from "./components/ContactForm"
+import BackToTopButton from "./components/BackToTopButton"
+import Footer from "./components/Footer"
 
 const FloatingParticles = dynamic(() => import("./components/FloatingParticles"), { ssr: false })
-
-type FormData = {
-  name: string
-  email: string
-  message: string
-  website: string
-}
 
 export default function DeveloperPortfolio() {
   const [showContactForm, setShowContactForm] = useState(false)
@@ -62,51 +59,6 @@ export default function DeveloperPortfolio() {
     if (el) el.scrollIntoView({ behavior: "smooth" })
   }
 
-  const technologies = [
-    {
-      title: "Développement Frontend",
-      subtitle: "Interfaces soignées, fluides et accessibles",
-      items: [
-        { name: "React", icon: "⚛️", description: "Applications interactives robustes" },
-        { name: "JavaScript", icon: "🟨", description: "Code propre et efficace" },
-        { name: "TypeScript", icon: "🔷", description: "Structure et fiabilité" },
-        { name: "Tailwind CSS", icon: "🎨", description: "Design responsive cohérent" },
-        { name: "Next.js", icon: "▲", description: "Performance & SEO" },
-      ],
-      gradient: "from-cyan-400 via-blue-500 to-purple-600",
-      bgGradient: "from-cyan-500/20 via-blue-500/20 to-purple-600/20",
-      icon: Palette,
-    },
-    {
-      title: "Développement Backend",
-      subtitle: "APIs claires, sécurité et données maîtrisées",
-      items: [
-        { name: "Node.js", icon: "🟢", description: "APIs maintenables" },
-        { name: "Express", icon: "🚀", description: "Architecture REST" },
-        { name: "PostgreSQL", icon: "🐘", description: "Données relationnelles solides" },
-        { name: "MongoDB", icon: "🍃", description: "NoSQL quand c’est pertinent" },
-        { name: "Docker", icon: "🐳", description: "Environnements cohérents" },
-      ],
-      gradient: "from-emerald-400 via-teal-500 to-cyan-600",
-      bgGradient: "from-emerald-500/20 via-teal-500/20 to-cyan-600/20",
-      icon: Zap,
-    },
-    {
-      title: "Outils et Méthodes",
-      subtitle: "Travail structuré, qualité et collaboration",
-      items: [
-        { name: "Git", icon: "🌿", description: "Versioning rigoureux" },
-        { name: "GitHub", icon: "🐙", description: "Workflows propres" },
-        { name: "Figma", icon: "🎯", description: "Passerelle design → dev" },
-        { name: "VS Code", icon: "💙", description: "Productivité au quotidien" },
-        { name: "Tests", icon: "✅", description: "Vérifier ce qui compte" },
-      ],
-      gradient: "from-orange-400 via-red-500 to-pink-600",
-      bgGradient: "from-orange-500/20 via-red-500/20 to-pink-600/20",
-      icon: Sparkles,
-    },
-  ]
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSending(true)
@@ -150,397 +102,34 @@ export default function DeveloperPortfolio() {
         <FloatingParticles />
       </div>
 
-      <header className="relative min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-6xl mx-auto">
-          <div className="mb-8">
-            <div className="inline-block relative">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black bg-gradient-to-r from-white via-cyan-400 to-purple-500 bg-clip-text text-transparent leading-tight">
-                PORTFOLIO
-              </h1>
-              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-2xl -z-10" />
-            </div>
-          </div>
+      <HeroSection
+        onScrollToProjects={() => scrollToSection("projects")}
+        onScrollToTech={() => scrollToSection("tech-stack")}
+      />
+      <AboutSection />
+      <TechStackSection scrollY={scrollY} isMobile={isMobile} />
+      <ProjectsSection />
 
-          <div className="mb-12">
-            <p className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed max-w-3xl mx-auto">
-              Développeur web alliant{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-semibold">
-                rigueur technique
-              </span>{" "}
-              et{" "}
-              <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-semibold">
-                passion créative
-              </span>{" "}
-              pour des solutions web de qualité
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 cursor-pointer"
-            >
-              <span className="relative z-10 flex items-center">
-                <Code className="w-5 h-5 mr-2" />
-                Explorer les Projets
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </button>
-
-            <button
-              onClick={() => scrollToSection("tech-stack")}
-              className="group relative px-8 py-4 border-2 border-purple-500 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer"
-            >
-              <span className="relative z-10 flex items-center">
-                <Server className="w-5 h-5 mr-2" />
-                Mes Compétences
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </button>
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse" />
-          </div>
-        </div>
-      </header>
-
-      <section className="relative py-32 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8">
-              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">À</span>{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                Propos
-              </span>
-            </h2>
-
-            <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
-              <p>
-                Développeur web qui aborde chaque projet avec{" "}
-                <span className="text-cyan-400 font-semibold">méthode et précision</span>. Mon objectif : livrer des
-                interfaces élégantes et des solutions fiables.
-              </p>
-              <p>
-                Chaque ligne de code est pensée pour la performance, la maintenabilité et l&apos;expérience utilisateur.
-              </p>
-              <p>
-                Je mets ma <span className="text-pink-400 font-semibold">rigueur au service de votre vision</span>.
-              </p>
-            </div>
-
-            <div className="mt-12 flex flex-wrap gap-4 justify-center">
-              {["Rigoureux", "Passionné", "Méticuleux", "Enthousiaste"].map((trait) => (
-                <span
-                  key={trait}
-                  className="px-4 py-2 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-full text-sm font-medium"
-                >
-                  {trait}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="tech-stack" className="relative py-32 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20 px-2">
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black mb-6 leading-none break-words">
-              <span className="bg-gradient-to-r from-white via-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                COMPÉTENCES
-              </span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Maîtrise technique approfondie et passion pour l&apos;innovation au service de vos projets
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {technologies.map((tech, index) => {
-              const IconComponent = tech.icon
-              return (
-                <div
-                  key={tech.title}
-                  className="group relative"
-                  style={
-                    isMobile
-                      ? undefined
-                      : {
-                          transform: `translateY(${Math.sin(scrollY * 0.003 + index) * 20}px)`,
-                        }
-                  }
-                >
-                  <div className="relative h-full bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 transition-all duration-500 group-hover:scale-105 group-hover:border-white/20">
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${tech.bgGradient} opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-500`}
-                    />
-
-                    <div className="relative z-10 mb-8">
-                      <div className="flex items-center justify-between mb-4">
-                        <IconComponent className="w-8 h-8 text-white" />
-                        <div className="w-12 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full" />
-                      </div>
-                      <h3 className="text-2xl font-bold text-white mb-2">{tech.title}</h3>
-                      <p className="text-gray-400 text-sm">{tech.subtitle}</p>
-                    </div>
-
-                    <div className="relative z-10 space-y-4">
-                      {tech.items.map((skill) => (
-                        <div
-                          key={skill.name}
-                          className="flex items-center space-x-4 p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300"
-                        >
-                          <div className="text-2xl">{skill.icon}</div>
-                          <div className="flex-1">
-                            <div className="font-semibold text-white">{skill.name}</div>
-                            <div className="text-xs text-gray-400">{skill.description}</div>
-                          </div>
-                          <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full opacity-50" />
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="relative z-10 mt-8 flex justify-center">
-                      <div className={`w-16 h-1 bg-gradient-to-r ${tech.gradient} rounded-full`} />
-                    </div>
-                  </div>
-
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${tech.gradient} opacity-0 group-hover:opacity-20 rounded-3xl blur-xl transition-opacity duration-500 -z-10`}
-                  />
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" className="relative py-32 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20 px-2">
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black mb-6 leading-none break-words">
-              <span className="bg-gradient-to-r from-white via-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                PROJETS
-              </span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Réalisations techniques où rigueur et créativité se rencontrent
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <a
-                key={project.id}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-500 hover:scale-105"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="relative aspect-video overflow-hidden">
-                  {project.image ? (
-                    <>
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        priority={index < 2}
-                      />
-                      <div className="absolute inset-0 bg-black/40" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    </>
-                  ) : (
-                    <div className={`${project.color} w-full h-full flex items-center justify-center relative overflow-hidden`}>
-                      <div className="absolute inset-0 bg-black/40" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <span className="text-white font-bold text-3xl drop-shadow-2xl relative z-10">
-                        {project.id.toString().padStart(2, "0")}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-6">
-                  <h3 className="font-bold text-white text-xl mb-2">{project.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">{project.description}</p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs font-medium text-white"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <p className="mt-4 text-cyan-400 text-sm opacity-0 group-hover:opacity-100 transition">
-                    Cliquer pour visiter →
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <button
+      <ContactButton
         onClick={() => {
           setSendError(null)
           setSendSuccess(false)
           setShowContactForm(true)
         }}
-        className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full shadow-2xl transition-all duration-300 z-40 flex items-center hover:scale-110 backdrop-blur-lg border border-white/20 text-sm sm:text-base max-w-[calc(100vw-2.5rem)] cursor-pointer"
-      >
-        <Mail className="w-5 h-5 mr-2" />
-        <span className="font-semibold">CONTACT</span>
-      </button>
-
-      {showBackToTop && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-5 left-5 sm:bottom-8 sm:left-8 bg-white/10 backdrop-blur-lg hover:bg-white/20 text-white p-4 rounded-full shadow-2xl transition-all duration-300 z-40 hover:scale-110 border border-white/20 cursor-pointer"
-          aria-label="Retour en haut"
-        >
-          <ArrowUp className="w-6 h-6" />
-        </button>
-      )}
-
-      <footer className="relative py-20 px-4 border-t border-white/10">
-        <div className="max-w-6xl mx-auto text-center">
-          <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-            Transformons vos idées en réalité digitale
-          </h3>
-
-          <div className="flex justify-center mb-8">
-            <a
-              href="https://github.com/ATN35"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group p-5 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full hover:border-white/20 hover:scale-110 transition-all duration-300 mr-4"
-              aria-label="GitHub"
-            >
-              <Github className="w-7 h-7 text-white group-hover:text-cyan-400 transition-colors" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/antoine-leli%C3%A8vre-7a510a3b8/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group p-5 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full hover:border-white/20 hover:scale-110 transition-all duration-300"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-7 h-7 text-white group-hover:text-cyan-400 transition-colors" />
-            </a>
-          </div>
-
-          <p className="text-gray-400">© 2025 Antoine Lelièvre</p>
-        </div>
-      </footer>
+      />
+      <BackToTopButton show={showBackToTop} />
+      <Footer />
 
       {showContactForm && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 w-full max-w-md relative">
-            <button
-              onClick={() => setShowContactForm(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
-              aria-label="Fermer"
-              disabled={isSending}
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-8">
-              Discutons de votre projet
-            </h3>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-white mb-2">
-                  Nom
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-gray-400 transition-all"
-                  required
-                  disabled={isSending}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-gray-400 transition-all"
-                  required
-                  disabled={isSending}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-white mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-gray-400 transition-all resize-none"
-                  required
-                  disabled={isSending}
-                />
-              </div>
-
-              <div className="hidden">
-                <label htmlFor="website">Website</label>
-                <input
-                  id="website"
-                  type="text"
-                  value={formData.website}
-                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                  autoComplete="off"
-                  tabIndex={-1}
-                />
-              </div>
-
-              {sendError && (
-                <div className="text-sm text-red-200 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
-                  {sendError}
-                </div>
-              )}
-
-              {sendSuccess && (
-                <div className="text-sm text-emerald-200 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3 flex items-center gap-2">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                  Message envoyé. Je te réponds rapidement.
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={isSending}
-                className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 disabled:opacity-60 disabled:hover:from-cyan-500 disabled:hover:to-purple-600 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg cursor-pointer"
-              >
-                {isSending ? "Envoi..." : "Envoyer"}
-              </button>
-            </form>
-          </div>
-        </div>
+        <ContactForm
+          formData={formData}
+          setFormData={setFormData}
+          isSending={isSending}
+          sendError={sendError}
+          sendSuccess={sendSuccess}
+          onSubmit={handleSubmit}
+          onClose={() => setShowContactForm(false)}
+        />
       )}
     </div>
   )
